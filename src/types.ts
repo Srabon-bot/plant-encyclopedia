@@ -1,4 +1,4 @@
-export interface Plant {
+export interface PlantType {
     id: number;
     name: string;
     description: string;
@@ -7,7 +7,7 @@ export interface Plant {
     category: string;
 }
 
-export interface Category {
+export interface CategoryType {
     id: number;
     category_name: string;
     small_description: string;

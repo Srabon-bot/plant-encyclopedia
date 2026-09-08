@@ -1,12 +1,17 @@
-
+import {Suspense} from 'react'
 import './App.css'
+import type { PlantType } from './types'
+import Plants from './components/Plants/Plants'
+import { getAllPlants } from './api/plants'
+
+const plantsPromise: Promise<PlantType[]> = getAllPlants();
+
 
 function App() {
-
   return (
-    <>
-      <h1>Welcome to the Plant Encyclopedia</h1>
-    </>
+    <Suspense fallback="Loading...">
+      <Plants plantsPromise={plantsPromise} />
+    </Suspense>
   )
 }
 
