@@ -1,32 +1,65 @@
-# React + TypeScript + Vite
+# 🌿 Plant catalog
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A plant catalog app built with React 19, TypeScript, and Tailwind CSS v4. Browse plant categories, filter to see plants within a category, and add plants to a cart — all fetched live from a public plants API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Category filtering** — click a category card to fetch and display only plants in that category; click again to close it
+- **Add to cart** — toggle plants in/out of a cart, with a live count
+- **Suspense-based data fetching** — uses React's `use()` hook with promises for categories and plants, no manual loading state
+- **Dark minimalist UI** — custom Tailwind v4 theme with a moss-green accent palette
 
-## React Compiler
+## Tech stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- [React 19](https://react.dev/) with the `use()` hook and Suspense
+- [TypeScript](https://www.typescriptlang.org/)
+- [Vite](https://vite.dev/) for dev server and build tooling
+- [Tailwind CSS v4](https://tailwindcss.com/) via `@tailwindcss/vite`
+- [Programming Hero Plants API](https://openapi.programming-hero.com/api/plants) for data
 
-## Expanding the Oxlint configuration
+## Getting started
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+npm install
+npm run dev
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+The app runs at `http://localhost:5173` by default.
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Project structure
+
+src/
+├── api/
+│   └── plants.ts          # API calls: getAllPlants, getCategories, getPlantByCategory, getPlantDetails
+├── components/
+│   ├── Categories/         # Category grid, fetches + lists categories
+│   ├── Category/           # Single category card with select/deselect button
+│   ├── Plants/              # Plant grid, holds cart state
+│   └── Plant/                # Single plant card with add/remove-from-cart button
+├── types.ts                # PlantType, CategoryType interfaces
+├── App.tsx                 # Top-level layout, category/plant promise wiring
+└── App.css                 # Tailwind import + theme tokens
+
+## API endpoints used
+
+| Purpose | Endpoint |
+|---|---|
+| All plants | `GET /api/plants` |
+| All categories | `GET /api/categories` |
+| Plants by category | `GET /api/category/:id` |
+| Single plant | `GET /api/plants/:id` |
+
+## Notes
+
+- Categories are fetched once at module load; plants are re-fetched via `useMemo` whenever the selected category changes.
+- The plants grid only renders once a category is selected — there's no "all plants" default view.
+- Cart state lives in `Plants.tsx` and resets on remount (no persistence yet).
+
+## Possible next steps
+
+- Persist cart state (localStorage or context) so it survives category switches
+- Add a cart summary/checkout view
+- Add loading/error UI beyond the plain Suspense fallback text
+- Add plant detail view using `getPlantDetails`
+
+## License
+
+Practice project — no license, for personal learning purposes.
