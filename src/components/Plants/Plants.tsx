@@ -1,4 +1,4 @@
-import {use, useState} from 'react'
+import { use, useState } from 'react'
 import type { PlantType } from '../../types'
 import Plant from '../Plant/Plant'
 
@@ -22,18 +22,16 @@ export default function Plants({ plantsPromise }: PlantsProps) {
     }
 
     return (
-        <div>
-            <div>
-                <h2>Plants: {plants.length}</h2>
-                <h2>Cart: {cartPlants.length}</h2>
+        <div className="mt-10">
+            <div className="flex items-baseline justify-between border-b border-border pb-3 mb-6">
+                <h2 className="font-display text-xl">{plants.length} plants</h2>
+                <span className="text-muted text-sm">Cart: {cartPlants.length}</span>
             </div>
-            <div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {plants.map((plant) => (
                     <Plant key={plant.id} plant={plant} addToCart={addToCart} />
                 ))}
             </div>
         </div>
     )
-
-
 }

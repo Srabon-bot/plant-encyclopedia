@@ -52,7 +52,7 @@ export const getPlantByCategory = async (
 ): Promise<PlantType[]> => {
   try {
     const response = await fetch(
-      `https://openapi.programming-hero.com/api/plants?category=${id}`
+      `https://openapi.programming-hero.com/api/category/${id}`
     );
 
     if (!response.ok) {
